@@ -1,14 +1,28 @@
 package perimeter
 
+import "math"
+
 type Rectangle struct {
 	Width  float64
 	Height float64
 }
 
-func Perimeter(rect Rectangle) float64 {
-	return 2 * (rect.Height + rect.Width)
+func (r Rectangle) Perimeter() float64 {
+	return 2 * (r.Height + r.Width)
 }
 
-func Area(rect Rectangle) float64 {
-	return rect.Height * rect.Width
+func (r Rectangle) Area() float64 {
+	return r.Height * r.Width
+}
+
+type Circle struct {
+	Radius float64
+}
+
+func (c Circle) Perimeter() float64 {
+	return 2 * math.Pi * c.Radius
+}
+
+func (c Circle) Area() float64 {
+	return math.Pi * math.Pow(c.Radius, 2)
 }
