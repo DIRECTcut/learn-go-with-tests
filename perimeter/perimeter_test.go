@@ -11,36 +11,39 @@ func TestPerimeter(t *testing.T) {
 		got := rectangle.Perimeter()
 		want := 60.0
 
-		assertEqual(got, want, t)
+		assertEqual(t, got, want)
 	})
 	t.Run("cirles", func(t *testing.T) {
 		circle := Circle{10}
 		got := circle.Perimeter()
 		want := 2 * math.Pi * 10
 
-		assertEqual(got, want, t)
+		assertEqual(t, got, want)
 	})
 }
 
 func TestArea(t *testing.T) {
-	t.Run("rectangles", func(t *testing.T) {
-		rectangle := Rectangle{10.0, 10.0}
-		got := rectangle.Area()
-		want := 100.0
+	checkArea := func(t *testing.T, shape Shape, want float64) {
+		t.Helper()
+		got := shape.Area()
 
-		assertEqual(got, want, t)
-	})
+		assertEqual(t, got, want)
+	}
 
-	t.Run("circles", func(t *testing.T) {
-		circle := Circle{10}
-		got := circle.Area()
-		want := math.Pi * math.Pow(10, 2)
+	areaTests := []struct {
+		shape Shape
+		want  float64
+	}{
+		{Rectangle{10.0, 10.0}, 100},
+		{Circle{10}, 314.1592653589793},
+	}
 
-		assertEqual(got, want, t)
-	})
+	for _, value := range areaTests {
+		checkArea(t, value.shape, value.want)
+	}
 }
 
-func assertEqual(got float64, want float64, t *testing.T) {
+func assertEqual(t *testing.T, got float64, want float64) {
 	if got != want {
 		t.Errorf("Want %.2f, got %.2f", want, got)
 	}
